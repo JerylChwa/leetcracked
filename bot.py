@@ -20,6 +20,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 async def getSubmissions(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Get total leetcode submissions when the command / getSubmissions is issued"""
+    # open source leetcode api
     url=f"http://localhost:3000/Jeryl01/solved"
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
