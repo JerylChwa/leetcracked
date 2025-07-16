@@ -1,6 +1,7 @@
 from flask import Flask, url_for
 from markupsafe import escape
 import requests
+from graphql_queries import GraphQLqueries
 # instance of the Flask class is the WSGI (Web Server Gateway Interface) application
 app = Flask(__name__)
 
@@ -31,27 +32,9 @@ def login_post():
 #     print(url_for('name', name='Xiangyun'))
 
 def fetch_language_stats(username):
-    GRAPHQL_URL = "https://leetcode.com/graphql/"
-    query = """
-        query getUserSubmissionStats($username: String!) {
-        matchedUser(username: $username) {
-            submitStats {
-            totalSubmissionNum {
-                count
-            }
-            }
-        }
-        }
-    """
-    variables = { "username": username }
-
-    resp = requests.post(
-        GRAPHQL_URL,
-        json={"query": query, "variables": variables},
-        headers={"Content-Type": "application/json"}
-    )
-    resp.raise_for_status()
-    return resp.json()["data"]["matchedUser"]["submitStats"]["totalSubmissionNum"]
+    gql_query = GraphQLqueries("jeryl01")
+    
+    return gql_query.fetch_submission_nums()
 
 # This call will block until the network round-trip and parsing finish:
 stats = fetch_language_stats("jeryl01")
