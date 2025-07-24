@@ -4,6 +4,9 @@ from graphql_queries import GraphQLqueries
 # instance of the Flask class is the WSGI (Web Server Gateway Interface) application
 app = Flask(__name__)
 
+@app.route('/')
+def hello_world():
+    return "<p>hello</p>"
 
 @app.route("/<username>")
 def fetch_language_stats(username):
